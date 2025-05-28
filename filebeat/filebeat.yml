@@ -1,0 +1,22 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /usr/share/elasticsearch/logs/*.log
+    multiline.pattern: '^\['
+    multiline.negate: true
+    multiline.match: after
+
+processors:
+  - add_host_metadata: ~
+  - add_docker_metadata: ~
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+setup.kibana:
+  host: "http://kibana:5601"
+
+monitoring.enabled: true
+
+logging.level: info
