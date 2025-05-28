@@ -1,0 +1,86 @@
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.kibana:
+  host: "http://kibana:5601"
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+
+metricbeat.modules:
+  - module: postgresql
+    enabled: true
+    period: 10s
+    hosts: ["postgres://postgres:P@ssw0rd@postgres:5432/elastic_project?sslmode=disable"]
+    username: "postgres"
+    password: "P@ssw0rd"
+
+  - module: logstash
+    enabled: true
+    period: 10s
+    hosts: ["http://logstash:9600"]
+    metricsets:
+      - node
+      - node_stats
+
+  - module: docker
+    enabled: true
+    period: 10s
+    hosts: ["unix:///var/run/docker.sock"]
+    metricsets:metricbeat.config.modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+setup.kibana:
+  host: "http://kibana:5601"
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+
+metricbeat.modules:
+  - module: postgresql
+    enabled: true
+    period: 10s
+    hosts: ["postgres://postgres:P@ssw0rd@postgres:5432/elastic_project?sslmode=disable"]
+    username: "postgres"
+    password: "P@ssw0rd"
+
+  - module: logstash
+    enabled: true
+    period: 10s
+    hosts: ["http://logstash:9600"]
+    metricsets:
+      - node
+      - node_stats
+
+  - module: docker
+    enabled: true
+    period: 10s
+    hosts: ["unix:///var/run/docker.sock"]
+    metricsets:
+      - container
+      - cpu
+      - diskio
+      - memory
+      - network
+      - info
+
+setup.dashboards.enabled: true
+
+      - container
+      - cpu
+      - diskio
+      - memory
+      - network
+      - info
+
+setup.dashboards.enabled: true
